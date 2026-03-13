@@ -30,7 +30,7 @@ constexpr std::size_t LEAF_NODE_MAX_CELLS = LEAF_NODE_SPACE_FOR_CELLS / LEAF_NOD
 
 void initialize_leaf_node(std::array<char, PAGE_SIZE>& page, bool is_root);
 NodeType get_node_type(const std::array<char, PAGE_SIZE>& page);
-std::uint32_t leaf_node_sum_cells(const std::array<char, PAGE_SIZE>& page);
+std::uint32_t leaf_node_num_cells(const std::array<char, PAGE_SIZE>& page);
 void set_leaf_node_num_cells(std::array<char, PAGE_SIZE>& page, std::uint32_t count);
 
 std::uint64_t leaf_node_key(const std::array<char, PAGE_SIZE>& page, std::size_t cell_num);

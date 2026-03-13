@@ -9,6 +9,7 @@ add_library(mini_db
     src/pager.cpp
     src/row.cpp
     src/table.cpp
+    src/btree.cpp
 )
 
 target_include_directories(mini_db PUBLIC include)

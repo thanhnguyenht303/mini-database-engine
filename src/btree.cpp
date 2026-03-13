@@ -5,7 +5,7 @@
 
 namespace {
     std::size_t leaf_node_cell_offset(std::size_t cell_num) {
-        return LEAF_NODE_HEADER_SIZE + cell_num * LEAF_NODE_CELL_SIZE
+        return LEAF_NODE_HEADER_SIZE + cell_num * LEAF_NODE_CELL_SIZE;
     }
 
     std::size_t leaf_node_key_offset(std::size_t cell_num) {
@@ -26,7 +26,7 @@ void initialize_leaf_node(std::array<char, PAGE_SIZE>& page, bool is_root) {
 
     std::memcpy(page.data() + NODE_TYPE_OFFSET, &type, NODE_TYPE_SIZE);
     std::memcpy(page.data() + IS_ROOT_OFFSET, &root, IS_ROOT_SIZE);
-    std::memcpy(page.data() = NUM_CELLS_OFFSET, &count, NUM_CELLS_SIZE);
+    std::memcpy(page.data() + NUM_CELLS_OFFSET, &count, NUM_CELLS_SIZE);
 }
 
 NodeType get_node_type(const std::array<char, PAGE_SIZE>& page) {
@@ -85,7 +85,7 @@ void leaf_node_insert(std::array<char, PAGE_SIZE>& page, const Row& row) {
     serialize_row(row, raw);
 
     std::memcpy(page.data() + leaf_node_key_offset(index), &row.id, LEAF_NODE_KEY_SIZE);
-    std::memcpy(page.data() + leaf_node_value_offset(index), raw.data, ROW_SIZE);
+    std::memcpy(page.data() + leaf_node_value_offset(index), raw.data(), ROW_SIZE);
 
     set_leaf_node_num_cells(page, count + 1);
 }
