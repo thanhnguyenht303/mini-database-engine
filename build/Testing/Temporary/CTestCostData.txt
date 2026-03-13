@@ -1,4 +1,0 @@
-row_test 6 0.00118437
-pager_test 4 0.00221082
-table_test 1 0.0553561
----

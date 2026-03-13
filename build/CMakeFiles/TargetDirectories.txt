@@ -1,8 +1,0 @@
-D:/mini-database-engine/mini-database-engine/build/CMakeFiles/mini_db.dir
-D:/mini-database-engine/mini-database-engine/build/CMakeFiles/mini_db_cli.dir
-D:/mini-database-engine/mini-database-engine/build/CMakeFiles/test_row.dir
-D:/mini-database-engine/mini-database-engine/build/CMakeFiles/test_pager.dir
-D:/mini-database-engine/mini-database-engine/build/CMakeFiles/test_table.dir
-D:/mini-database-engine/mini-database-engine/build/CMakeFiles/RUN_TESTS.dir
-D:/mini-database-engine/mini-database-engine/build/CMakeFiles/ALL_BUILD.dir
-D:/mini-database-engine/mini-database-engine/build/CMakeFiles/ZERO_CHECK.dir
