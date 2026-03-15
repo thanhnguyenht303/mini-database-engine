@@ -18,6 +18,7 @@ class Pager {
         std::array<char, PAGE_SIZE>& get_page(std::size_t page_num);
         void flush_page(std::size_t page_num);
         std::size_t num_pages() const;
+        std::size_t allocate_page();
 
     private:
         std::fstream file_;

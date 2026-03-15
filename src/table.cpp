@@ -50,3 +50,32 @@ std::size_t Table::row_count() {
 
     return leaf_node_num_cells(page);
 }
+
+std::optional<Row> Table::find(std::uint64_t id) {
+    auto& page = pager_.get_page(0);
+
+    if(get_node_type(page) != NodeType::leaf) {
+        throw std::runtime_error("root page is not a leaf node");
+    }
+
+    std::uint32_t left = 0;
+    std::uint32_t right = leaf_node_num_cells(page);
+
+    while (left < right) {
+        std::uint32_t mid = left + (right - left)/2;
+        std::uint64_t key = leaf_node_key(page, mid);
+
+        if(key == id) {
+            return leaf_node_value(page, mid);
+        }
+        else if (key < id)
+        {
+            left = mid + 1;
+        }
+        else {
+            right = mid;
+        }
+    }
+
+    return std::nullopt;
+}

@@ -62,6 +62,18 @@ int main() {
 
             assert(threw);
         }
+
+        {
+            Table table(filename);
+
+            auto found = table.find(2);
+            assert(found->id == 2);
+            assert(found->username == "bob");
+            assert(found->email == "bob@gmail.com");
+
+            auto missing = table.find(99);
+            assert(!missing.has_value());
+        }
         std::remove(filename.c_str());
     }
     

@@ -72,3 +72,18 @@ void Pager::flush_page(std::size_t page_num){
 std::size_t Pager::num_pages() const {
     return (file_length_ + PAGE_SIZE - 1) / PAGE_SIZE;
 }
+
+std::size_t Pager::allocate_page() {
+    std::size_t page_num = num_pages();
+
+    if(page_num >= MAX_PAGES) {
+        throw std::runtime_error("database full");
+    }
+
+    auto& page = get_page(page_num);
+    page.fill(0);
+    loaded_[page_num] = true;
+    flush_page(page_num);
+
+    return page_num;
+}

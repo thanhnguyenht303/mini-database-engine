@@ -37,3 +37,17 @@ std::uint64_t leaf_node_key(const std::array<char, PAGE_SIZE>& page, std::size_t
 Row leaf_node_value(const std::array<char, PAGE_SIZE>& page, std::size_t cell_num);
 
 void leaf_node_insert(std::array<char, PAGE_SIZE>& page, const Row& row);
+
+void initialize_internal_node(std::array<char, PAGE_SIZE>& page, bool is_root);
+
+std::uint32_t internal_node_num_keys(const std::array<char, PAGE_SIZE>& page);
+void set_internal_node_num_keys(std::array<char, PAGE_SIZE>& page, std::uint32_t count);
+
+std::uint32_t internal_node_right_child(const std::array<char, PAGE_SIZE>& page);
+void set_interna_node_right_child(std::array<char, PAGE_SIZE>&page, std::uint32_t page_num);
+
+void set_internal_node_cell(std::array<char, PAGE_SIZE>& page, std::size_t cell_num, std::uint32_t child_page, std::uint64_t key);
+
+std::uint64_t leaf_node_max_key(const std::array<char, PAGE_SIZE>& page);
+
+void leaf_node_insert_nonfull(std::array<char, PAGE_SIZE>& page, const Row& row);
