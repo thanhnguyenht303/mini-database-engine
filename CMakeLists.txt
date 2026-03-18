@@ -31,3 +31,7 @@ add_test(NAME pager_test COMMAND test_pager)
 add_executable(test_table tests/test_table.cpp)
 target_link_libraries(test_table PRIVATE mini_db)
 add_test(NAME table_test COMMAND test_table)
+
+add_executable(test_btree tests/test_btree.cpp)
+target_link_libraries(test_btree PRIVATE mini_db)
+add_test(NAME btree_test COMMAND test_btree)

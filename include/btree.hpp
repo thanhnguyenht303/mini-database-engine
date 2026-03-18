@@ -1,3 +1,5 @@
+#pragma once
+
 #include "pager.hpp"
 #include "row.hpp"
 
@@ -28,6 +30,16 @@ constexpr std::size_t LEAF_NODE_SPACE_FOR_CELLS = PAGE_SIZE - LEAF_NODE_HEADER_S
 
 constexpr std::size_t LEAF_NODE_MAX_CELLS = LEAF_NODE_SPACE_FOR_CELLS / LEAF_NODE_CELL_SIZE;
 
+constexpr std::size_t INTERNAL_NODE_NUM_KEYS_OFFSET = NUM_CELLS_OFFSET;
+constexpr std::size_t INTERNAL_NODE_RIGHT_CHILD_SIZE = sizeof(std::uint32_t);
+constexpr std::size_t INTERNAL_NODE_RIGHT_CHILD_OFFSET = INTERNAL_NODE_NUM_KEYS_OFFSET + sizeof(std::uint32_t);
+
+constexpr std::size_t INTERNAL_NODE_HEADER_SIZE = NODE_TYPE_SIZE + IS_ROOT_SIZE + sizeof(std::uint32_t) + sizeof(std::uint32_t);
+
+constexpr std::size_t INTERNAL_NODE_CHILD_SIZE = sizeof(std::uint32_t);
+constexpr std::size_t INTERNAL_NODE_KEY_SIZE = sizeof(std::uint64_t);
+constexpr std::size_t INTERNAL_NODE_CELL_SIZE = INTERNAL_NODE_CHILD_SIZE + INTERNAL_NODE_KEY_SIZE;
+
 void initialize_leaf_node(std::array<char, PAGE_SIZE>& page, bool is_root);
 NodeType get_node_type(const std::array<char, PAGE_SIZE>& page);
 std::uint32_t leaf_node_num_cells(const std::array<char, PAGE_SIZE>& page);
@@ -44,10 +56,13 @@ std::uint32_t internal_node_num_keys(const std::array<char, PAGE_SIZE>& page);
 void set_internal_node_num_keys(std::array<char, PAGE_SIZE>& page, std::uint32_t count);
 
 std::uint32_t internal_node_right_child(const std::array<char, PAGE_SIZE>& page);
-void set_interna_node_right_child(std::array<char, PAGE_SIZE>&page, std::uint32_t page_num);
+void set_internal_node_right_child(std::array<char, PAGE_SIZE>&page, std::uint32_t page_num);
 
 void set_internal_node_cell(std::array<char, PAGE_SIZE>& page, std::size_t cell_num, std::uint32_t child_page, std::uint64_t key);
 
 std::uint64_t leaf_node_max_key(const std::array<char, PAGE_SIZE>& page);
 
 void leaf_node_insert_nonfull(std::array<char, PAGE_SIZE>& page, const Row& row);
+
+std::uint32_t internal_node_child(const std::array<char, PAGE_SIZE>& page, std::size_t cell_num);
+std::uint64_t internal_node_key(const std::array<char, PAGE_SIZE>& page, std::size_t cell_num);

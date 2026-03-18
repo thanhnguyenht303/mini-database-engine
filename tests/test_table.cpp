@@ -19,8 +19,6 @@ int main() {
             table.insert(Row{1, "alice", "alice@example.com"});
             table.insert(Row{2, "bob", "bob@gmail.com"});
 
-            assert(table.row_count() == 3);
-
             auto rows = table.select_all();
             assert(rows.size() == 3);
 
@@ -39,8 +37,6 @@ int main() {
 
         {
             Table table(filename);
-
-            assert(table.row_count() == 3);
 
             auto rows = table.select_all();
             assert(rows.size() == 3);
@@ -79,24 +75,60 @@ int main() {
     
 
     {
-        const std::string full_cell_test_file_name = "full_cell_test_table.db";
-        std::remove(full_cell_test_file_name.c_str());
+        const std::string split_file_name = "full_cell_test_table.db";
+        std::remove(split_file_name.c_str());
 
-        Table table(full_cell_test_file_name);
+        {
+            Table table(split_file_name);
 
-        for(std::uint64_t i = 1; i <= LEAF_NODE_MAX_CELLS; ++i) {
-            std::string user = "user" + to_string(i);
-            table.insert(Row{i, user, user + "@example.com"});
+            for(std::uint64_t i = 1; i <= LEAF_NODE_MAX_CELLS; ++i) {
+                std::string user = "user" + to_string(i);
+                table.insert(Row{i, user, user + "@example.com"});
+            }
+
+            auto rows = table.select_all();
+            assert(rows.size() == LEAF_NODE_MAX_CELLS + 1);
+
+            for(std::uint64_t i = 0; i < rows.size(); ++i) {
+                assert(rows[i].id == i + 1);
+            }
+
+            auto first = table.find(1);
+            assert(first.has_value());
+            assert(first->id == 1);
+
+            auto middle = table.find((LEAF_NODE_MAX_CELLS + 1) / 2);
+            assert(middle.has_value());
+
+            auto last = table.find((LEAF_NODE_MAX_CELLS + 1));
+            assert(last.has_value());
+            assert(last->id == LEAF_NODE_MAX_CELLS + 1);
+
+            auto missing = table.find(9999);
+            assert(!missing.has_value());
         }
 
-        bool threw = false;
-        try {
-            table.insert(Row{LEAF_NODE_MAX_CELLS + 1, "overflow", "overflow@example.com"});
-        } catch (const std::runtime_error) {
-            threw = true;
+        {
+            Table table(split_file_name);
+
+            auto rows = table.select_all();
+            assert(rows.size() == LEAF_NODE_MAX_CELLS + 1);
+
+            for (std::uint64_t i = 0; i < rows.size(); ++i) {
+                assert(rows[i].id == i + 1);
+            }
+
+            auto first = table.find(1);
+            assert(first.has_value());
+
+            auto last = table.find(LEAF_NODE_MAX_CELLS + 1);
+            assert(last.has_value());
+
+            auto missing = table.find(9999);
+            assert(!missing.has_value());
         }
 
-        assert(threw);
+        std::remove(split_file_name.c_str());
     }
     
     return 0;
