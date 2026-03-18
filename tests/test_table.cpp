@@ -87,7 +87,7 @@ int main() {
             }
 
             auto rows = table.select_all();
-            assert(rows.size() == LEAF_NODE_MAX_CELLS + 1);
+            assert(rows.size() == LEAF_NODE_MAX_CELLS);
 
             for(std::uint64_t i = 0; i < rows.size(); ++i) {
                 assert(rows[i].id == i + 1);
@@ -100,9 +100,9 @@ int main() {
             auto middle = table.find((LEAF_NODE_MAX_CELLS + 1) / 2);
             assert(middle.has_value());
 
-            auto last = table.find((LEAF_NODE_MAX_CELLS + 1));
+            auto last = table.find((LEAF_NODE_MAX_CELLS));
             assert(last.has_value());
-            assert(last->id == LEAF_NODE_MAX_CELLS + 1);
+            assert(last->id == LEAF_NODE_MAX_CELLS);
 
             auto missing = table.find(9999);
             assert(!missing.has_value());
@@ -112,7 +112,7 @@ int main() {
             Table table(split_file_name);
 
             auto rows = table.select_all();
-            assert(rows.size() == LEAF_NODE_MAX_CELLS + 1);
+            assert(rows.size() == LEAF_NODE_MAX_CELLS);
 
             for (std::uint64_t i = 0; i < rows.size(); ++i) {
                 assert(rows[i].id == i + 1);
@@ -121,7 +121,7 @@ int main() {
             auto first = table.find(1);
             assert(first.has_value());
 
-            auto last = table.find(LEAF_NODE_MAX_CELLS + 1);
+            auto last = table.find(LEAF_NODE_MAX_CELLS);
             assert(last.has_value());
 
             auto missing = table.find(9999);

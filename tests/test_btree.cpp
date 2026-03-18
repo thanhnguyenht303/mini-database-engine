@@ -88,7 +88,7 @@ int main () {
 
         assert(internal_node_num_keys(page) == 1);
         assert(internal_node_child(page, 0) == 5);
-        assert(internal_node_child(page, 0) == 42);
+        assert(internal_node_key(page, 0) == 42);
         assert(internal_node_right_child(page) == 8);
     }
 
